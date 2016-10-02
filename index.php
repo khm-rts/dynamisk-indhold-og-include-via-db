@@ -10,7 +10,8 @@ $side_url_navn = '';
 // Hvis side er defineret i URL paramatre og værdien ikke er tom, overskrives variabel med værdi herfra
 if ( isset($_GET['side']) && !empty($_GET['side']) )
 {
-	$side_url_navn = $_GET['side'];
+	// Escape værdi for at sikre imod SQL injections, når variabel bruges i forespørgsel til databasen
+	$side_url_navn = mysqli_real_escape_string($link, $_GET['side']);
 }
 
 // Forespørgsel til at vælge aktiv side fra databasen, der matcher navn gemt i variablen $side_url_navn
